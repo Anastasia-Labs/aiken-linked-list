@@ -9,7 +9,7 @@ use linkedlist/utils
 
 pub fn init(common: Common) -> Bool {
   let must_spend_nodes = list.length(common.node_inputs) > 0
-  let must_exactly_one_node_outputs = list.length(common.node_outputs) == 1
+  let must_exactly_one_node_output = list.length(common.node_outputs) == 1
   let must_mint_correctly =
     utils.validate_mint(
       common.mint,
@@ -17,7 +17,7 @@ pub fn init(common: Common) -> Bool {
       constants.origin_node_token_name,
       1,
     )
-  must_spend_nodes? && must_exactly_one_node_outputs? && must_mint_correctly?
+  must_spend_nodes? && must_exactly_one_node_output? && must_mint_correctly?
 }
 
 pub fn deinit(common: Common) -> Bool {
