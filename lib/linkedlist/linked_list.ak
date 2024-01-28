@@ -1,5 +1,5 @@
 use aiken/bytearray
-use aiken/interval
+use aiken/interval.{Interval, is_entirely_before}
 use aiken/list
 use aiken/transaction.{Output}
 use aiken/transaction/value.{lovelace_of}
@@ -63,7 +63,7 @@ pub fn insert(common: Common, insert_key: PubKeyHash, node: SetNode) -> Bool {
 
 pub fn remove(
   common: Common,
-  range: POSIXTime,
+  range: Interval<POSIXTime>,
   disc_config: Config,
   outs: List<Output>,
   sigs: List<PubKeyHash>,
@@ -92,9 +92,7 @@ pub fn remove(
   let own_input_fee = utils.div_ceil(own_input_lovelace, 4)
   let disc_deadline = disc_config.deadline
   let must_satisfy_removal_broke_phase_rules =
-    if
-    interval.is_entirely_after(interval.after(disc_deadline - 8_640_000), range){
-    
+    if interval.is_entirely_before(range, disc_deadline) {
       True
     } else {
       list.any(

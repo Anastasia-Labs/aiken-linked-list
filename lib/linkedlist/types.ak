@@ -46,6 +46,6 @@ pub type Common {
 pub type NodeAction {
   Init
   Deinit
-  Insert
-  Remove
+  Insert { key_to_insert: PubKeyHash, covering_node: SetNode }
+  Remove { key_to_remove: PubKeyHash, covering_node: SetNode }
 }
