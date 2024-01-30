@@ -1,5 +1,5 @@
 use aiken/bytearray
-use aiken/interval.{Interval, is_entirely_before}
+use aiken/interval.{Interval}
 use aiken/list
 use aiken/transaction.{Output}
 use aiken/transaction/value.{lovelace_of}
@@ -8,7 +8,7 @@ use linkedlist/types.{Common, Config, POSIXTime, PubKeyHash, SetNode}
 use linkedlist/utils
 
 pub fn init(common: Common) -> Bool {
-  let must_spend_nodes = list.length(common.node_inputs) > 0
+  let must_spend_nodes = list.length(common.node_inputs) == 0
   let must_exactly_one_node_output = list.length(common.node_outputs) == 1
   let must_mint_correctly =
     utils.validate_mint(

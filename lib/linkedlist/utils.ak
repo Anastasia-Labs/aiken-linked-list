@@ -71,7 +71,7 @@ pub fn make_common(
   let in_outputs = get_outputs(inputs)
   let from_node_val = only_at_node_val(in_outputs, own_cs)
   let to_node_val = only_at_node_val(outputs, own_cs)
-  expect Some(head) = list.head(from_node_val)
+  expect Some(head) = list.head(list.concat(from_node_val, to_node_val))
   let Output { address: node_address, .. } = head
   expect
     from_node_val
