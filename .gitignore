@@ -1,4 +1,13 @@
+# Mac OS
+
 .DS_Store
+
+# Aiken 
+
 build
-.VSCodeCounter
 plutus.json
+
+# VSCode
+
+.VSCodeCounter
+.vscode

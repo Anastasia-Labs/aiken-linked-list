@@ -4,7 +4,7 @@ use aiken/list
 use aiken/transaction.{Output}
 use aiken/transaction/value.{lovelace_of}
 use linkedlist/constants
-use linkedlist/types.{Common, Config, POSIXTime, PubKeyHash, SetNode}
+use linkedlist/types.{Common, Config, Empty, POSIXTime, PubKeyHash, SetNode}
 use linkedlist/utils
 
 pub fn init(common: Common) -> Bool {
@@ -21,7 +21,8 @@ pub fn init(common: Common) -> Bool {
 }
 
 pub fn deinit(common: Common) -> Bool {
-  let must_spend_exactly_one_node_input = list.length(common.node_inputs) == 1
+  expect [head_node] = common.node_inputs
+  expect Empty = head_node.node.next
   let must_not_produce_node_output = list.length(common.node_outputs) == 0
   let must_burn_correctly =
     utils.validate_mint(
@@ -30,7 +31,7 @@ pub fn deinit(common: Common) -> Bool {
       constants.origin_node_token_name,
       -1,
     )
-  must_spend_exactly_one_node_input? && must_not_produce_node_output? && must_burn_correctly?
+  must_not_produce_node_output? && must_burn_correctly?
 }
 
 pub fn insert(common: Common, insert_key: PubKeyHash, node: SetNode) -> Bool {
